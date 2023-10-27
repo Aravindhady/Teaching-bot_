@@ -1,0 +1,135 @@
+import pyttsx3  # pip install pyttsx3
+import speech_recognition as sr  # pip install speechRecognition
+import datetime
+import wikipedia  # pip install wikipedia
+import webbrowser
+
+engine = pyttsx3.init('sapi5')
+voices = engine.getProperty('voices')
+# print(voices[1].id)
+engine.setProperty('voice', voices[0].id)
+
+
+def speak(audio):
+    engine.say(audio)
+    engine.runAndWait()
+
+
+def wishMe():
+    hour = int(datetime.datetime.now().hour)
+    if hour >= 0 and hour < 12:
+        speak("Good Morning!")
+
+    elif hour >= 12 and hour < 18:
+        speak("Good Afternoon!")
+
+    else:
+        speak("Good Evening!")
+
+    speak("I am teaching bot. Please tell me how may I help you")
+
+
+def takeCommand():
+    # It takes microphone input from the user and returns string output
+
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        print("Listening...")
+        r.pause_threshold = 1
+        audio = r.listen(source)
+
+    try:
+        print("Recognizing...")
+        query = r.recognize_google(audio,language='en-in')
+        print(f"User said: {query}\n")
+
+    except Exception:
+        # print(e)
+        print("Say that again please...")
+        return "None"
+    return query
+
+
+if __name__ == "_main_":
+    wishMe()
+    while True:
+
+        query = takeCommand().lower()
+
+        # Logic for executing tasks based on query
+        if 'wikipedia' in query:
+            speak('Searching Wikipedia...')
+            query = query.replace("wikipedia", "")
+            results = wikipedia.summary(query, sentences=2)
+            speak("According to Wikipedia")
+            print(results)
+            speak(results)
+
+        elif 'open youtube' in query:
+            webbrowser.open("youtube.com")
+
+        elif 'open google' in query:
+            webbrowser.open("google.com")
+
+        elif 'unit 1 in machine learning ' in query:
+            speak('the introuction of Machine Learning – Types of Machine Learning – Supervised Learning – Unsupervised Learning – Basic Concepts in Machine Learning – Machine Learning Process – Weight Space – Testing Machine Learning Algorithms – A Brief Review of Probability Theory –Turning Data into Probabilities – The Bias-Variance Tradeoff')
+
+        elif 'unit 2 in machine learning' in query:
+            speak('the supervoiced learning :Linear Models for Regression – Linear Basis Function Models – The Bias-Variance Decomposition – Bayesian Linear Regression – Common Regression Algorithms – Simple Linear Regression – Multiple Linear Regression – Linear Models for Classification – Discriminate Functions – Probabilistic Generative Models – Probabilistic Discriminative Models – Laplace Approximation – Bayesian Logistic Regression – Common Classification Algorithms – k-Nearest Neighbors – Decision Trees – Random Forest model – Support Vector Machines')
+
+        elif 'unit 3 in machine learning' in query:
+            speak('the unsupervice learning Mixture Models and EM – K-Means Clustering – Dirichlet Process Mixture Models – Spectral Clustering – Hierarchical Clustering – The Curse of Dimensionality – Dimensionality Reduction – Principal Component Analysis – Latent Variable Models(LVM) – Latent Dirichlet Allocation (LDA)')
+
+        elif 'unit 4 in machine learning' in query:
+            speak('the graphical model: Bayesian Networks – Conditional Independence – Markov Random Fields – Learning – Naive Bayes Classifiers – Markov Model – Hidden Markov Model- Model evaluation – Precision,Recall.')
+
+        elif 'unit 5 in machine learning' in query:
+            speak('the advance learning: Reinforcement Learning – Representation Learning – Neural Networks – Active Learning – Ensemble Learning – Bootstrap Aggregation – Boosting – Ada Boost & Gradient Boosting Machines.')
+
+        elif 'what are the types of machine learning' in query:
+            speak('supervoiced learning, unsupervoiced  learning, reinforcement, semi supervoiced learning')
+
+        elif 'what is supervised learning' in query:
+            speak('Supervised learning is a type of machine learning method in which we ovide sample labeled data to the machine learning system in order to train it, and on that basis, it predicts the output.The system creates a model using labeled data to understand the datasets and learn about each data, once the training and processing are done then we test the model by providing a sample data to check whether it is predicting the exact output or not.The goal of supervised learning is to map input data with the output data. The supervised learning is based on supervision, and it is the same as when a student learns things in the supervision of the teacher. The example of supervised learning is spam filtering')
+
+        elif 'what is unsupervised learning' in query:
+            speak('The machine is trained using the unlabeled dataset, and the machine predicts the output without any supervision. In unsupervised learning, the models are trained with the data that is neither classified nor labelled, and the model acts on that data without any supervision.• The main aim of the unsupervised learning algorithm is to group or categories the unsorted dataset according to the similarities, patterns, and differences. Machines are instructed to find the hidden patterns from the input dataset.• So, now the machine will discover its patterns and differences, such as colour difference, shape difference, and predict the output when it is tested with the test dataset')
+
+        elif 'who discover you' in query:
+            speak('black bird industry')
+
+        elif 'which language is used to create you' in query:
+            speak('python')
+
+        elif 'how to i hack you' in query:
+            speak('it is imposible, no one can hack me')
+
+        elif 'what is reinforcement learning' in query:
+            speak('Reinforcement learning works on a feedback-based process, in which an AI agent (A software component) automatically explore its surrounding by hitting & trail, taking action, learning from experiences, and improving its performance.Agent gets rewarded for each good action and get punished for each bad action; hence the goal of reinforcement learning, agent is to maximize therewards.In this , there is no labelled data like supervised learning, and agents learn from their experiences only.For example, a child learns various things by experiences in his day-to-day life.Agent receives feedback in terms of punishment and rewards')
+
+        elif 'what is positive reinforcement learning' in query:
+            speak('Positive reinforcement learning specifies increasing the tendency that the required behavior would occur again by adding something. It enhances the strength of the behavior of the agent and positively impacts it.')
+
+        elif 'what is negative reinforcement learning' in query:
+            speak('Negative reinforcement learning works exactly opposite to the positive RL. It increases the tendency that the specific behaviour would occur again by avoiding the negative condition')
+
+        elif 'what are the categories of Reinforcement learning' in query:
+            speak('Reinforcement learning is categorized mainly into two types ofmethods/algorithms:Positive Reinforcement Learning Negative Reinforcement Learning')
+
+        elif 'what are the algorithm of Supervised learning' in query:
+            speak('Supervised learning can be grouped further in two categories of algorithms:Classification and  Regression The main goal of the supervised learning technique is to map the input variable(x) with the output variable(y)')
+
+        elif 'what is classification' in query:
+            speak('Classification algorithms are used to solve the classification problems in which the output variable is categorical, such as "Yes" or No, Male or Female, Red or Blue, etc. The classification algorithms predict the categories present in the dataset. Some real-world examples of classification algorithms are Spam Detection, Email filtering, etc. Some popular classification algorithms are given below: Random Forest Algorithm Decision Tree Algorithm  Logistic Regression Algorithm Support Vector Machine Algorithm')
+
+        elif 'what is regression' in query:
+            speak('Regression algorithms are used to solve regression problems in which there is a linear relationship between input and output variables. These are used to predict continuous output variables, such as market trends, weather prediction, etc. Some popular Regression algorithms are given below:• Simple Linear Regression Algorithm Multivariate Regression Algorithm  Decision Tree Algorithm  Lasso Regression')
+
+        elif 'what is simple linear regression' in query:
+            speak('If a single independent variable is used to predict the value of a numerical dependent variable,then such a Linear Regression algorithm is called Simple Linear Regression')
+
+        elif 'what is multi linear regression' in query:
+            speak ('If more than one independent variable is used to predict the value of a numerical dependent variable, then such a Linear Regression algorithm is called Multiple Linear Regression')
+
+        elif 'what is your name' in query:
+            speak('chabooo teaching bot')
